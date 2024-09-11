@@ -17,9 +17,7 @@ json_config = {
     },
     "formatters": {
         "json_correlation": {
-            "format": "%(asctime)s %(levelname)s [%(origin)s] [%(document_type)s] [%(correlation_id)s] "
-                      "[%(document_correlation_id)s] [%(integration_batch_id)s] [%(branch_code)s]"
-                      " %(threadName)s %(filename)s %(funcName)s %(lineno)s %(message)s ",
+            "format": "%(asctime)s %(levelname)s %(threadName)s %(filename)s %(funcName)s %(lineno)s %(message)s ",
             "class": "config.log.CustomJsonFormatter"
         }
     },
@@ -50,11 +48,6 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
 class RequestIdLogFilter(logging.Filter):
     def filter(self, record):
         record.correlation_id = asgi_correlation_id.correlation_id.get()
-        record.origin = context.origin.get()
-        record.document_correlation_id = context.document_correlation_id.get()
-        record.integration_batch_id = context.integration_batch_id.get()
-        record.branch_code = context.branch_code.get()
-        record.document_type = context.document_type.get()
         return True
 
 

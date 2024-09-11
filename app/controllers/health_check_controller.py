@@ -1,15 +1,16 @@
-import os
-from flask import Flask, jsonify
-
-app = Flask(__name__)
-
-path_base = os.getenv("PATH_BASE", "/sale")
-health_path = os.getenv("HEALTH_CHECK", "health")
+from flask import Flask, jsonify, Blueprint
+from flask_restx import Namespace, Resource, Api
 
 
-# Rota de Health Check
-@app.route(f'{path_base}/{health_path}', methods=['GET'])
-def health_check():
-    return jsonify({"message": "OK"}), 200
+health_ns = Namespace('health', description='Health check do sistema')
+health_controller = Blueprint('health', __name__)
 
 
+@health_ns.route('/')
+class HealthCheck(Resource):
+    def get(self):
+        response = {
+            "status": "healthy",
+            "message": "Service is up and running"
+        }
+        return response, 200

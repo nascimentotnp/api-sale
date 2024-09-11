@@ -4,6 +4,7 @@ import requests
 import os
 from dotenv import load_dotenv
 
+from domain.repository.product_repository import create_products
 
 load_dotenv()
 
@@ -30,8 +31,8 @@ def fetch_and_store_products():
                 'rating_rate': product['rating']['rate'],
                 'rating_count': product['rating']['count']
             }
-            create_products(**new_product)
-
+            #create_products(**new_product)
+        return products
     except requests.exceptions.HTTPError as http_err:
         print(f"Erro HTTP ao buscar produtos da API: {http_err}")
     except requests.exceptions.ConnectionError:
