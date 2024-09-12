@@ -1,5 +1,4 @@
 import logging
-
 import requests
 import os
 from dotenv import load_dotenv
@@ -19,19 +18,6 @@ def fetch_and_store_products():
         response.raise_for_status()
 
         products = response.json()
-
-        for product in products:
-            new_product = {
-                'id': product['id'],
-                'title': product['title'],
-                'price': product['price'],
-                'description': product['description'],
-                'category': product['category'],
-                'image': product['image'],
-                'rating_rate': product['rating']['rate'],
-                'rating_count': product['rating']['count']
-            }
-            #create_products(**new_product)
         return products
     except requests.exceptions.HTTPError as http_err:
         print(f"Erro HTTP ao buscar produtos da API: {http_err}")
