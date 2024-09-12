@@ -30,7 +30,7 @@ def read_active_products():
 
 
 def read_products_by_id(product_id):
-    return session.query(Product).filter(Product.id == product_id).first()
+    return session.query(Product).filter(Product.id == product_id, Product.active == True).first()
 
 
 def update_products(product_id, **kwargs):
@@ -82,7 +82,6 @@ def persist_products(products):
 
 
 def initialize_products_if_empty(products):
-
     existing_product = session.query(Product).first()
 
     if existing_product is None:
@@ -90,4 +89,3 @@ def initialize_products_if_empty(products):
         persist_products(products)
     else:
         print("Produtos já existem no banco de dados. Nenhuma ação necessária.")
-

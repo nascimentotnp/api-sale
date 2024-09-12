@@ -15,7 +15,9 @@ products_model = products_ns.model('Produtos', {
     'category': fields.String(required=True, description='Categoria do Produto'),
     'image': fields.String(required=True, description='Imagem do Produto'),
     'rating_rate': fields.Float(required=True, description='Taxa de classificação'),
-    'rating_count': fields.Integer(required=True, description='Contagem de classificação')
+    'rating_count': fields.Integer(required=True, description='Contagem de classificação'),
+    'active': fields.Boolean(required=True, description='ativo'),
+    'created_at': fields.Date(required=True, description='data_criacao')
 })
 
 
@@ -29,7 +31,7 @@ class ProductController(Resource):
         if product:
             return product
         else:
-            products_ns.abort(404, message='Produto não encontrado')
+            products_ns.abort(404, message='Produto não encontrado ou descontinuado, favor verificar com o suporte')
 
     @products_ns.doc('update_products')
     @products_ns.expect(products_model)

@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from gateways.databases.gateway_database import Base
 
 
-class User(Base):
+class Users(Base):
     __tablename__ = 'users'
 
     id = Column('id', Integer, primary_key=True, nullable=False)
