@@ -3,7 +3,6 @@ import requests
 import os
 from dotenv import load_dotenv
 
-from domain.repository.product_repository import create_products
 
 load_dotenv()
 

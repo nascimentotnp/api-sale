@@ -3,7 +3,6 @@ from flask_restx import Namespace, Resource, Api
 
 
 health_ns = Namespace('health', description='Health check do sistema')
-health_controller = Blueprint('health', __name__)
 
 
 @health_ns.route('/')

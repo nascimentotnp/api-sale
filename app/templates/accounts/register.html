@@ -1,0 +1,159 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Cadastrar {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">Login</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="#">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Authentication</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Login</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        {% if msg %}
+                        <span class="text-danger">{{ msg | safe }}</span>
+                        {% else %}
+                        Adicione suas Credenciais
+                        {% endif %}
+                    </div>
+                </div>
+                {% if success %}
+                <div class="card-action">
+                    <a href="{{ url_for('authentication_blueprint.login') }}" class="btn btn-success">Entrar</a>
+                </div>
+                {% else %}
+                <form method="post" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="icon-user"></i>
+                                            </span>
+                                        </div>
+                                        {{ form.username(placeholder="Login", class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="icon-envelope"></i>
+                                                    </span>
+                                        </div>
+                                        {{ form.email(placeholder="E-mail", class="input form-control", type="email") }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="icon-lock"></i>
+                                                    </span>
+                                        </div>
+                                        {{ form.password(placeholder="Senha", class="form-control", type="password") }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="flaticon-add-user"></i>
+                                            </span>
+                                        </div>
+                                        {{ form.firstname(placeholder="Nome", class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="flaticon-user-2"></i>
+                                            </span>
+                                        </div>
+                                        {{ form.lastname(placeholder="Sobrenome", class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="icon-map"></i>
+                                            </span>
+                                        </div>
+                                        {{ form.address(placeholder="Endereço", class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="icon-phone"></i>
+                                                </span>
+                                        </div>
+                                        {{ form.phone(placeholder="Telefone", class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Gênero</label><br/>
+                                    <div class="form-check">
+                                        <label class="form-radio-label">
+                                            <input class="form-radio-input" type="radio" name="gender" value="Masculino" {% if form.gender.data=='Masculino' %} checked {% endif %}>
+                                            <span class="form-radio-sign">Masculino</span>
+                                        </label>
+                                        <label class="form-radio-label ml-3">
+                                            <input class="form-radio-input" type="radio" name="gender" value="Feminino" {% if form.gender.data=='Feminino' %} checked {% endif %}>
+                                            <span class="form-radio-sign">Feminino</span>
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- Close the 'row' div here -->
+                    </div> <!-- Close the 'card-body' div here -->
+                    <div class="card-action">
+                        <button type="submit" name="register" class="btn btn-success">Cadastrar</button>
+                        <p class="my-2 text-sm mx-auto">
+                            Já tem cadastro, faça login
+                            <a href="{{ url_for('authentication_blueprint.login') }}" class="btn ">Entrar</a>
+                        </p>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

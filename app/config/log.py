@@ -5,8 +5,6 @@ from logging import config
 import asgi_correlation_id
 from pythonjsonlogger import jsonlogger
 
-from config import context
-
 json_config = {
     "version": 1,
     "disable_existing_loggers": False,

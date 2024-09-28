@@ -1,8 +1,7 @@
 services:
   - type: web
-    name: flask-app-sale-dashboard
+    name: flask-app-store-fake-dashboard
     plan: starter
-    env: python
     region: frankfurt
     buildCommand: "./build.sh"
     startCommand: "gunicorn run:app"

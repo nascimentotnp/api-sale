@@ -1,0 +1,130 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Login {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">Login</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="#">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Authentication</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Login</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>
+                            Adicione suas credenciais
+                        </span>
+                    </div>
+                </div>
+
+                <form method="post" action="#">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="icon-user"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            {{ form.username(placeholder="Login", class="form-control") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="icon-lock"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            {{ form.password(placeholder="Senha", class="form-control", type="password") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <button type="submit" name="login" class="btn btn-success">Entrar</button>
+                        <a href="{{ url_for('authentication_blueprint.register') }}" class="btn" >Cadastrar</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    // Save aKey in localStorage
+    const asyncLocalStorage = {
+        setItem: function (key, value) {
+            return Promise.resolve().then(function () {
+                localStorage.setItem(key, value);
+            });
+        }
+    }
+
+    // Login hook
+    document.getElementsByTagName('form')[0].onsubmit = (e) => {
+
+        e.preventDefault();
+
+        const formData = new FormData(e.target)
+        const username = formData.get('username');
+        const password = formData.get('password');
+
+        fetch('/login/jwt/',{
+            method: 'POST',
+            body: JSON.stringify({
+                username: username,
+                password: password
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then((res) => {
+                // Store token in localStorage
+                asyncLocalStorage.setItem('token',res.data).then(result => {e.target.submit()})
+            })
+            .catch((err) => {console.log(err)})
+    }
+</script>
+{% endblock javascripts %}
