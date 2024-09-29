@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from domain.repository.product_repository import read_all_products, initialize_products_if_empty
 from domain.repository.user_repository import read_user_by_id
 from gateways.api_fake.api_sale_gateway import fetch_and_store_products
-from gateways.databases.connection import engine
+from gateways.databases.connection import engine, connection_db_url
 
 from controllers.home_controller import home_blueprint
 from controllers.login_controller import authentication_blueprint
@@ -33,8 +33,7 @@ def register_blueprints(app):
 
 
 def configure_database(app):
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI',
-                                                      'postgresql://postgres:root@appstore-db:5432/sale')
+    app.config['SQLALCHEMY_DATABASE_URI'] = connection_db_url
 
     @app.before_first_request
     def initialize_database():
@@ -72,3 +71,4 @@ def create_app(config):
     app.register_error_handler(500, internal_server_error)
     app.register_error_handler(403, access_forbidden)
     return app
+

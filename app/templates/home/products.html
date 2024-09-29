@@ -65,6 +65,13 @@
                                         <p class="small">Adicione os dados de cadastro do produto</p>
                                         <form id="addProductForm" method="POST" action="/produtos/criar" enctype="multipart/form-data">
                                             <div class="row">
+                                                <!-- Imagem -->
+                                                <div class="col-sm-6">
+                                                    <div class="form-group form-group-default">
+                                                        <label>Image URL</label>
+                                                        <input id="addProductImage" name="image" type="file" class="form-control" required>
+                                                    </div>
+                                                </div>
                                                 <!-- Campo de nome do produto -->
                                                 <div class="col-sm-6">
                                                     <div class="form-group form-group-default">
@@ -111,13 +118,7 @@
                                                         <textarea id="addProductDescription" name="description" class="form-control" placeholder="Descrição do produto" required></textarea>
                                                     </div>
                                                 </div>
-                                                <!-- Imagem -->
-                                                <div class="col-sm-6">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Image URL</label>
-                                                        <input id="addProductImage" name="image" type="file" class="form-control" required>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                         </form>
                                     </div>
@@ -133,27 +134,30 @@
                             <table id="basic-datatables" class="table table-striped table-hover table-bordered align-middle">
                                 <thead class="thead-dark">
                                 <tr>
-                                    <th class="sorting_asc" tabindex="0" >Imagem</th>
-                                    <th class="sorting_asc" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending" aria-sort="ascending">Produto</th>
-                                    <th class="sorting_asc" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Preço</th>
-                                    <th class="sorting_asc" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Categoria</th>
-                                    <th class="sorting_asc" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Classificação</th>
-                                    <th class="sorting_asc" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Avaliações</th>
-                                    <th class="sorting_asc" tabindex="0"  >Action</th>
+                                    <th class="sorting_asc table-header" tabindex="0" >Imagem</th>
+                                    <th class="sorting_asc table-header" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending" aria-sort="ascending">Produto</th>
+                                    <th class="sorting_asc table-header" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Preço</th>
+                                    <th class="sorting_asc table-header" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Categoria</th>
+                                    <th class="sorting_asc table-header" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Classificação</th>
+                                    <th class="sorting_asc table-header" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Avaliações</th>
+                                    <th class="sorting_asc table-header" tabindex="0"  rowspan="1" colspan="1" aria-label="Age: activate to sort column descending"  aria-sort="ascending">Descrição</th>
+                                    <th class="sorting_asc table-header" tabindex="0"  >Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% if products %}
                                 {% for product in products %}
                                 <tr>
-                                    <td class="text-center">
-                                        <img src="{{ product.image }}" class="avatar avatar-sm rounded-circle" alt="{{ product.title }}">
+                                    <td class="column-actions">
+                                        <img src="{{ product.image }}" class="avatar avatar-sm rounded-circle" alt="{{ product.image }}">
                                     </td>
-                                    <td class="column-product">
+                                    <td class="column-product-name">
                                         <span class="product-title" title="{{ product.title }}">{{ product.title }}</span>
                                     </td>
                                     <td class="column-actions">R${{ product.price }}</td>
-                                    <td>{{ product.category }}</td>
+                                    <td class="column-product">
+                                        <span class="product-title" title="{{ product.category }}">{{ product.category }}</span>
+                                    </td>
                                     <td class="column-rating align-middle text-center">
                                         <div class="d-flex align-items-center justify-content-center">
                                             <span class="me-2 text-xs font-weight-bold">{{ product.rating_rate }} / 5</span>
@@ -162,7 +166,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-center">{{ product.rating_count }}</td>
+                                    <td class="column-product-name">{{ product.rating_count }}</td>
+                                    <td class="column-product-name">
+                                        <span class="product-title" title="{{ product.description }}">{{ product.description }}</span>
+                                    </td>
+
                                     <td class="column-actions">
                                         <div class="form-button-action d-flex justify-content-around align-items-center">
                                             <a class="btn-sm me-2" title="Alterar preço" onclick="editProductPrice('{{ product.id }}', '{{ product.price }}')">
@@ -204,15 +212,13 @@
 {% block javascripts %}
 <style>
     .column-actions {
-        max-width: 100px;
-
+        max-width: 75px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-
-    .column-product {
-        max-width: 100px;
+    .column-product-name {
+        max-width: 50px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -224,6 +230,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+    .table-header th {
+        font-size: 12px;
+        text-align: center;
     }
 </style>
 
