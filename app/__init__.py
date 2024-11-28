@@ -19,7 +19,7 @@ login_manager = LoginManager()
 
 def register_extensions(app):
     login_manager.init_app(app)
-    login_manager.login_view = "authentication.login"  # Match the route name in your login blueprint
+    login_manager.login_view = "authentication_blueprint.login"  # Match the route name in your login blueprint
 
     @login_manager.user_loader
     def load_user(user_id):
