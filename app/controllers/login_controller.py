@@ -25,10 +25,10 @@ login_model = api.model('Login', {
 
 @authentication_blueprint.route('/')
 def route_default():
-    return redirect(url_for('authentication_blueprint.custom_login'))
+    return redirect(url_for('authentication_blueprint.login'))
 
 
-@authentication_blueprint.route('/login', methods=['GET', 'POST'], endpoint='custom_login')
+@authentication_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm(request.form)
 
